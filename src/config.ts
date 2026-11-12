@@ -4,7 +4,7 @@ export const SITE: Site = {
   website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
   author: "haha2632531",
   desc: "一个简洁、响应式且适合 SEO 的个人博客，记录思考、生活与创作。",
-  title: "Mingalaba",
+  title: "瑜龙共舞",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerPage: 3,
