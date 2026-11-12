@@ -1,0 +1,75 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Main from "@layouts/Main.astro";
+import { SITE } from "@config";
+---
+
+<Layout title={`技术服务 | ${SITE.title}`}>
+  <Header activeNav="services" />
+  <Main pageTitle="技术服务" pageDesc="为个人与小团队提供更稳、更清晰、更高效的数字化支持。">
+    <div class="service-grid">
+      <article class="card">
+        <span class="tag">01</span>
+        <h2>网站/博客搭建</h2>
+        <p>从品牌定位到页面搭建，帮助你把想法快速落成一个能展示、能运营的站点。</p>
+      </article>
+
+      <article class="card">
+        <span class="tag">02</span>
+        <h2>前端开发支持</h2>
+        <p>页面结构优化、交互细节、响应式适配以及前端协作问题排查，帮助你把体验做得更顺。</p>
+      </article>
+
+      <article class="card">
+        <span class="tag">03</span>
+        <h2>内容与品牌梳理</h2>
+        <p>帮助你整理品牌信息、文案结构、导航逻辑，让站点更容易被理解和记住。</p>
+      </article>
+
+      <article class="card">
+        <span class="tag">04</span>
+        <h2>长期陪跑支持</h2>
+        <p>适合需要持续迭代的项目，提供维护建议、优化方案和阶段性更新支持。</p>
+      </article>
+    </div>
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .card {
+    padding: 1.35rem 1.2rem;
+    border: 1px solid rgb(var(--color-border));
+    background: rgb(var(--color-fill));
+  }
+
+  .tag {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    color: rgb(var(--color-accent));
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .card p {
+    margin: 0;
+    color: rgb(var(--color-text-muted));
+    line-height: 1.8;
+  }
+</style>
