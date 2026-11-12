@@ -1,0 +1,61 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Main from "@layouts/Main.astro";
+import { SITE } from "@config";
+---
+
+<Layout title={`免费资源 | ${SITE.title}`}>
+  <Header activeNav="resources" />
+  <Main pageTitle="免费资源" pageDesc="整理一些实用工具、经验和模板，方便你直接拿来用。">
+    <div class="resource-list">
+      <article class="resource-item">
+        <h2>开发资源清单</h2>
+        <p>常用的前端、部署、文档工具与参考资料集合，适合快速查漏补缺。</p>
+      </article>
+
+      <article class="resource-item">
+        <h2>学习路线模板</h2>
+        <p>从入门到进阶的思路整理，用清单的形式帮助你更容易行动和复盘。</p>
+      </article>
+
+      <article class="resource-item">
+        <h2>站点结构模板</h2>
+        <p>适合个人博客、作品集或知识站点的基础结构参考，减少重复搭建成本。</p>
+      </article>
+
+      <article class="resource-item">
+        <h2>内容输出模板</h2>
+        <p>用于文章草稿、教程笔记和知识沉淀的简洁模板，适合持续更新。</p>
+      </article>
+    </div>
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  .resource-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .resource-item {
+    padding: 1.2rem 1.25rem;
+    border: 1px solid rgb(var(--color-border));
+    background: rgb(var(--color-fill));
+  }
+
+  .resource-item h2 {
+    margin: 0 0 0.45rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+  }
+
+  .resource-item p {
+    margin: 0;
+    color: rgb(var(--color-text-muted));
+    line-height: 1.8;
+  }
+</style>
