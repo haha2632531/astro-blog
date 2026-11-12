@@ -1,40 +1,38 @@
-@layer base {
-  :root,
-  html[data-theme="light"] {
-    --color-fill: 247, 245, 239;
-    --color-text-base: 37, 40, 32;
-    --color-accent: 214, 91, 62;
-    --color-card: 235, 230, 219;
-    --color-card-muted: 221, 214, 200;
-    --color-border: 222, 219, 209;
-  }
+:root,
+html[data-theme="light"] {
+  --color-fill: 247, 245, 239;
+  --color-text-base: 37, 40, 32;
+  --color-accent: 214, 91, 62;
+  --color-card: 235, 230, 219;
+  --color-card-muted: 221, 214, 200;
+  --color-border: 222, 219, 209;
+}
 
-  html[data-theme="dark"] {
-    --color-fill: 27, 31, 27;
-    --color-text-base: 240, 238, 229;
-    --color-accent: 242, 138, 105;
-    --color-card: 48, 54, 46;
-    --color-card-muted: 62, 68, 58;
-    --color-border: 66, 70, 61;
-  }
+html[data-theme="dark"] {
+  --color-fill: 27, 31, 27;
+  --color-text-base: 240, 238, 229;
+  --color-accent: 242, 138, 105;
+  --color-card: 48, 54, 46;
+  --color-card-muted: 62, 68, 58;
+  --color-border: 66, 70, 61;
+}
 
-  body {
-    font-family: Inter, "Segoe UI", "Noto Sans SC", sans-serif;
-    letter-spacing: -0.01em;
-  }
+body {
+  font-family: Inter, "Segoe UI", "Noto Sans SC", sans-serif;
+  letter-spacing: -0.01em;
+}
 
-  section,
-  footer {
-    max-width: 62rem;
-  }
+section,
+footer {
+  max-width: 62rem;
+}
 
-  a {
-    transition: color 0.18s ease;
-  }
+a {
+  transition: color 0.18s ease;
+}
 
-  .prose {
-    line-height: 1.85;
-  }
+.prose {
+  line-height: 1.85;
 }
 
 header .nav-container,
