@@ -8,97 +8,93 @@ import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
-import { SOCIALS } from "@config";
+import { SOCIALS, SITE } from "@config";
 
 const posts = await getCollection("blog");
-
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-
 const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
 <Layout>
   <Header />
-  <main id="main-content">
-    <section id="hero">
-      <h1>你好，欢迎来到我的博客</h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="rss-link"
-        aria-label="订阅 RSS"
-        title="RSS 订阅"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-          ><path
-            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-          ></path><path
-            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-          ></path><circle cx="6" cy="18" r="2"></circle>
-        </svg>
-        <span class="sr-only">RSS 订阅</span>
-      </a>
+  <main id="main-content" class="home-page">
+    <section id="hero" class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> 独立博客 · 持续记录</p>
+        <h1>你好，我是 <span>{SITE.author}</span><br />欢迎来到我的小小角落。</h1>
+        <p class="hero-intro">
+          这里记录我对技术、生活与创作的观察。慢慢写，认真读，也把值得记住的想法留在这里。
+        </p>
 
-      <p>
-        这里记录我的思考、生活与创作。欢迎阅读文章，也欢迎通过下方的社交平台与我联系。
-      </p>
-      <p>
-        想了解更多？欢迎浏览博客文章，或查看
-        <LinkButton
-          className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          项目说明
-        </LinkButton>。
-      </p>
-      {
-        // only display if at least one social link is enabled
-        socialCount > 0 && (
-          <div class="social-wrapper">
-            <div class="social-links">社交平台：</div>
-            <Socials />
-          </div>
-        )
-      }
+        <div class="hero-actions">
+          <a class="primary-link" href="/posts/">阅读文章 <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="/about/">认识我</a>
+        </div>
+
+        {
+          socialCount > 0 && (
+            <div class="social-wrapper">
+              <span class="social-label">也可以在这里找到我</span>
+              <Socials />
+            </div>
+          )
+        }
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-topline"><span>NOTES &amp; IDEAS</span><span>2026 — NOW</span></div>
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-orbit orbit-three"></div>
+        <div class="art-sun"></div>
+        <span class="art-star star-one">✳</span>
+        <span class="art-star star-two">✳</span>
+        <div class="art-caption"><span>留心日常</span><span>保持好奇</span></div>
+      </div>
     </section>
 
     <Hr />
 
     {
       featuredPosts.length > 0 && (
-        <>
-          <section id="featured">
-            <h2>精选文章</h2>
-            <ul>
-              {featuredPosts.map(({ data, slug }) => (
-                <Card
-                  href={`/posts/${slug}/`}
-                  frontmatter={data}
-                  secHeading={false}
-                />
-              ))}
-            </ul>
-          </section>
-          {recentPosts.length > 0 && <Hr />}
-        </>
+        <section id="featured" class="post-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">精选内容</p>
+              <h2>值得一读</h2>
+            </div>
+            <span class="section-index">01 / 精选</span>
+          </div>
+
+          <ul class="post-list">
+            {featuredPosts.map(({ data, slug }) => (
+              <Card href={`/posts/${slug}/`} frontmatter={data} secHeading={false} />
+            ))}
+          </ul>
+        </section>
       )
     }
 
+    {featuredPosts.length > 0 && recentPosts.length > 0 && <Hr />}
+
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <h2>最新文章</h2>
-          <ul>
+        <section id="recent-posts" class="post-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">最近更新</p>
+              <h2>新鲜想法</h2>
+            </div>
+            <a class="section-link" href="/posts/">全部文章 <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <ul class="post-list">
             {recentPosts.map(
               ({ data, slug }, index) =>
                 index < 4 && (
-                  <Card
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
+                  <Card href={`/posts/${slug}/`} frontmatter={data} secHeading={false} />
                 )
             )}
           </ul>
@@ -108,12 +104,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <div class="all-posts-btn-wrapper">
       <LinkButton href="/posts/">
-        查看全部文章
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-          ></path>
-        </svg>
+        去文章归档
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
       </LinkButton>
     </div>
   </main>
@@ -122,39 +114,329 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 </Layout>
 
 <style>
-  /* ===== Hero Section ===== */
-  #hero {
-    @apply pb-6 pt-8;
-  }
-  #hero h1 {
-    @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
-  }
-  #hero .rss-link {
-    @apply mb-6;
-  }
-  #hero .rss-icon {
-    @apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
-  }
-  #hero p {
-    @apply my-2;
-  }
-  .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
-  }
-  .social-links {
-    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+  .home-page {
+    --home-ink: #252820;
+    --home-muted: #77786f;
+    --home-accent: #d65b3e;
   }
 
-  /* ===== Featured & Recent Posts Sections ===== */
-  #featured,
-  #recent-posts {
-    @apply pb-6 pt-12;
+  :global(html[data-theme="dark"]) .home-page {
+    --home-ink: #f0eee5;
+    --home-muted: #aaa99e;
+    --home-accent: #f28a69;
   }
-  #featured h2,
-  #recent-posts h2 {
-    @apply text-2xl font-semibold tracking-wide;
+
+  .hero-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.85fr);
+    gap: clamp(2rem, 7vw, 5rem);
+    align-items: center;
+    padding-top: clamp(3.5rem, 9vw, 7rem);
+    padding-bottom: clamp(3rem, 7vw, 5.5rem);
   }
+
+  .eyebrow {
+    margin: 0 0 0.85rem;
+    color: var(--home-accent);
+    font: 500 0.72rem/1.4 "IBM Plex Mono", monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow-dot {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-right: 0.55rem;
+    border-radius: 50%;
+    background: var(--home-accent);
+    vertical-align: 0.08rem;
+  }
+
+  #hero h1 {
+    max-width: 13ch;
+    margin: 0;
+    color: var(--home-ink);
+    font: 600 clamp(2.5rem, 5.6vw, 4.65rem) / 1.12 Georgia, "Songti SC", serif;
+    letter-spacing: -0.055em;
+  }
+
+  #hero h1 span {
+    color: var(--home-accent);
+  }
+
+  .hero-intro {
+    max-width: 31rem;
+    margin: 1.5rem 0 0;
+    color: var(--home-muted);
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 1.7rem;
+  }
+
+  .primary-link {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: var(--home-ink);
+    color: rgb(var(--color-fill));
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .primary-link:hover {
+    transform: translateY(-2px);
+    background: var(--home-accent);
+    color: white;
+  }
+
+  .primary-link span,
+  .text-link,
+  .section-link {
+    color: var(--home-accent);
+  }
+
+  .text-link {
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.3rem;
+  }
+
+  .social-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .social-label {
+    color: var(--home-muted);
+    font: 0.68rem "IBM Plex Mono", monospace;
+  }
+
+  .hero-art {
+    position: relative;
+    aspect-ratio: 0.94;
+    min-height: 250px;
+    overflow: hidden;
+    background: #e8dfce;
+    color: #252820;
+  }
+
+  :global(html[data-theme="dark"]) .hero-art {
+    background: #30362e;
+    color: #f0eee5;
+  }
+
+  .art-topline,
+  .art-caption {
+    position: absolute;
+    z-index: 2;
+    right: 1.1rem;
+    left: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    font: 0.58rem "IBM Plex Mono", monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .art-topline {
+    top: 1rem;
+  }
+
+  .art-caption {
+    bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .art-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgb(37 40 32 / 22%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-28deg);
+  }
+
+  :global(html[data-theme="dark"]) .art-orbit {
+    border-color: rgb(240 238 229 / 25%);
+  }
+
+  .orbit-one {
+    width: 72%;
+    height: 40%;
+  }
+
+  .orbit-two {
+    width: 93%;
+    height: 55%;
+    transform: translate(-50%, -50%) rotate(35deg);
+  }
+
+  .orbit-three {
+    width: 80%;
+    height: 82%;
+    transform: translate(-50%, -50%) rotate(63deg);
+  }
+
+  .art-sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 34%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--home-accent);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 14px rgb(214 91 62 / 10%), 0 0 0 30px rgb(214 91 62 / 6%);
+  }
+
+  .art-star {
+    position: absolute;
+    color: var(--home-accent);
+    font-size: 1.1rem;
+  }
+
+  .star-one {
+    top: 28%;
+    left: 23%;
+  }
+
+  .star-two {
+    right: 20%;
+    bottom: 28%;
+    font-size: 0.8rem;
+  }
+
+  .post-section {
+    padding-top: 3.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-heading .eyebrow {
+    margin-bottom: 0.35rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    color: var(--home-ink);
+    font: 600 clamp(1.7rem, 3vw, 2.25rem) / 1.2 Georgia, "Songti SC", serif;
+    letter-spacing: -0.035em;
+  }
+
+  .section-index,
+  .section-link {
+    padding-bottom: 0.25rem;
+    color: var(--home-muted);
+    font: 0.68rem "IBM Plex Mono", monospace;
+  }
+
+  .section-link {
+    color: var(--home-accent);
+    text-decoration: none;
+  }
+
+  .section-link span {
+    margin-left: 0.35rem;
+  }
+
+  .post-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-list > li {
+    position: relative;
+    margin: 0;
+    padding: 1.35rem 0;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .post-list > li:last-child {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .post-list > li > a {
+    color: var(--home-ink);
+    text-decoration: none;
+  }
+
+  .post-list > li > a:hover {
+    color: var(--home-accent);
+  }
+
+  .post-list h2,
+  .post-list h3 {
+    margin: 0 0 0.35rem;
+    color: inherit;
+    font: 600 1.2rem/1.4 Georgia, "Songti SC", serif;
+  }
+
+  .post-list p {
+    max-width: 48rem;
+    margin: 0.55rem 0 0;
+    color: var(--home-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
   .all-posts-btn-wrapper {
-    @apply my-8 text-center;
+    margin: 2rem 0 4rem;
+    text-align: left;
+  }
+
+  .all-posts-btn-wrapper a {
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0;
+    background: transparent;
+    color: var(--home-ink);
+  }
+
+  .all-posts-btn-wrapper a:hover {
+    border-color: var(--home-accent);
+    color: var(--home-accent);
+  }
+
+  .all-posts-btn-wrapper svg {
+    fill: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    .hero-section {
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+      padding-top: 3rem;
+    }
+
+    .hero-art {
+      width: min(100%, 390px);
+      aspect-ratio: 1.2;
+      min-height: 0;
+      margin-inline: auto;
+    }
+
+    .social-wrapper {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 </style>
