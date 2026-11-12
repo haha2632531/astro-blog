@@ -2,32 +2,57 @@
 layout: ../layouts/AboutLayout.astro
 title: 关于我
 ---
-AstroPaper is a minimal, responsive and SEO-friendly Astro blog theme. I designed and crafted this based on [my personal blog](https://satnaing.dev/blog).
+### **心安就是归处**
 
-This theme is aimed to be accessible out of the box. Light and dark mode are supported by
-default and additional color schemes can also be configured.
+最踏实的幸福，不是惊天动地，而是清晨醒来心里不慌。
 
-This theme is self-documented  which means articles/posts in this theme can also be considered as documentations. So, see the documentation for more info.
+心态不好的时候，人总想立刻解决所有问题：工作要顺、关系要好、未来要清楚。可越急，心越乱。后来我慢慢明白，调整心态的第一步，不是逼自己马上想通，而是先让心落地。
 
-![coding dev illustration](/assets/dev.svg)
+好好吃一顿饭，把房间收拾干净，出门走二十分钟，把今天必须做的三件事写下来。心安定下来，路才会一点点清楚。日子慢慢过，路一步步走，很多答案不是想出来的，是走着走着才出现的。
 
-## Tech Stack
+### **别跟自己过不去**
 
-This theme is written in vanilla JavaScript (+ TypeScript for type checking) and a little bit of ReactJS for some interactions. TailwindCSS is used for styling; and Markdown is used for blog contents.
+生活不是用来计较的，而是用来快乐的。
 
-## Features
+我们常常把小事放大：一句话没回好，一件事没做成，一个选择不如别人。可回头看，除了生死，都是小事。学会释怀，不是不在乎，而是不让自己一直困在里面。
 
-Here are certain features of this site.
+心态调整的一个关键，是分清“我能控制的”和“我控制不了的”。能控制的，去行动；控制不了的，先放下。别跟自己过不去，才能轻装上阵。
 
-- fully responsive and accessible
-- SEO-friendly
-- light & dark mode
-- fuzzy search
-- super fast performance
-- draft posts
-- pagination
-- sitemap & rss feed
-- highly customizable
+### **接受不完美**
 
-If you like this theme, you can star/contribute to the [repo](https://github.com/satnaing/astro-paper).  
-Or you can even give any feedback via my [email](mailto:contact@satnaing.dev).
+成熟，是容得下生命的不完美，也经得起世事的颠簸。
+
+有缺憾才是恒久。计划会被打乱，努力不一定立刻有回报，关系也会有摩擦。接受不完美，不是躺平，而是不再用“必须完美”来惩罚自己。
+
+允许自己今天只完成六十分，允许情绪低落一会儿，允许有些事暂时没有答案。心宽一点，路就宽一点。
+
+### **靠自己最稳，但别把自己关起来**
+
+求人不如求己。当你强大了，就不怕人欺。
+
+成长常常是逼着你一个人踉踉跄跄地受伤，跌跌撞撞地坚强。但“靠自己”不等于“什么都自己扛”。真正的稳，是提升自己的能力，也懂得在需要时开口求助。
+
+心态上可以独立，关系上不必封闭。能自己站稳，也愿意接受善意，这才是更成熟的坚强。
+
+### **行动胜过空想**
+
+不要抱怨环境。越嫌麻烦越懒得学，就越可能错过美好。
+
+想做的事，现在就做，别等明天。心态不是靠想通的，很多时候是靠做出来的。先做五分钟，先写第一行字，先走出门，先发出那条消息。行动会带来反馈，反馈会带来新的心态。
+
+### **平淡才是真**
+
+能把普通日子过踏实，就很了不起。
+
+饿了吃饭，累了休息，心里有盼头。心态调整到最后，不是每天都热血沸腾，而是能在平淡里找到秩序和安稳。
+
+给自己留几个固定的“生活锚点”：按时睡觉、每周运动、读几页书、记录一件小确幸。日子有了锚点，心就不容易飘。
+
+---
+
+## **结语**
+
+心安就是归处。  
+别跟自己过不去，接受不完美，靠自己站稳，用行动代替空想，把普通日子过踏实。  
+愿我们都能在慢慢的生活里，长出稳稳的心态。
+
