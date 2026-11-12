@@ -3,28 +3,28 @@ media:
   output: /
 content:
   - name: posts
-    label: Posts
+    label: 博客文章
     type: collection
     path: src/content/blog
     view:
-      fields: [ title, draft, date ]
+      fields: [ title, draft, pubDatetime ]
     fields:
-      - { name: author, label: Author, type: string }
-      - { name: pubDatetime, label: Date, type: date }
-      - { name: modDatetime, label: Date, type: date }
-      - { name: title, label: Title, type: string, required: true }
-      - { name: ogImage, label: Title, type: string }
-      - { name: slug, label: Slug, type: string }
-      - { name: featured, label: Featured, type: boolean }
-      - { name: draft, label: Draft, type: boolean }
-      - { name: tags, label: Tags, type: string, list: true }
-      - { name: description, label: Description, type: string }
-      - { name: body, label: Body, type: rich-text }
+      - { name: author, label: 作者, type: string }
+      - { name: pubDatetime, label: 发布时间, type: date }
+      - { name: modDatetime, label: 修改时间, type: date }
+      - { name: title, label: 文章标题, type: string, required: true }
+      - { name: ogImage, label: 封面图链接, type: string }
+      - { name: slug, label: 自定义链接别名, type: string }
+      - { name: featured, label: 设为精选文章, type: boolean }
+      - { name: draft, label: 存为草稿, type: boolean }
+      - { name: tags, label: 文章标签, type: string, list: true }
+      - { name: description, label: 文章摘要描述, type: string }
+      - { name: body, label: 文章正文内容, type: rich-text }
   - name: about
-    label: About page
+    label: 关于页面
     type: file
     path: src/pages/about.md
     fields:
       - { name: layout, type: string, hidden: true, default: "../layouts/AboutLayout.astro" }
-      - { name: title, label: Title, type: string }
-      - { name: body, label: Body, type: rich-text, options: { input: public/assets, output: /assets } }
+      - { name: title, label: 页面标题, type: string }
+      - { name: body, label: 页面正文内容, type: rich-text, options: { input: public/assets, output: /assets } }
