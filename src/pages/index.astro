@@ -23,28 +23,32 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1>你好，欢迎来到我的博客</h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="rss-link"
-        aria-label="订阅 RSS"
-        title="RSS 订阅"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-          ><path
-            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-          ></path><path
-            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-          ></path><circle cx="6" cy="18" r="2"></circle>
-        </svg>
-        <span class="sr-only">RSS 订阅</span>
-      </a>
+      <div class="hero-meta">
+        <span class="eyebrow">Personal Notes / Journal</span>
+        <a
+          target="_blank"
+          href="/rss.xml"
+          class="rss-link"
+          aria-label="订阅 RSS"
+          title="RSS 订阅"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+            ><path
+              d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+            ></path><path
+              d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+            ></path><circle cx="6" cy="18" r="2"></circle>
+          </svg>
+        </a>
+      </div>
 
-      <p>
-        这里记录我的思考、生活与创作。欢迎阅读文章，也欢迎通过下方的社交平台与我联系。
+      <h1>你好，欢迎来到我的博客</h1>
+
+      <p class="lead">
+        这里记录我的思考、生活与创作。欢迎阅读文章，也欢迎通过社交平台与我联系。
       </p>
-      <p>
+
+      <p class="sub-copy">
         想了解更多？欢迎浏览博客文章，或查看
         <LinkButton
           className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
@@ -53,8 +57,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           项目说明
         </LinkButton>。
       </p>
+
       {
-        // only display if at least one social link is enabled
         socialCount > 0 && (
           <div class="social-wrapper">
             <div class="social-links">社交平台：</div>
@@ -122,38 +126,56 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 </Layout>
 
 <style>
-  /* ===== Hero Section ===== */
   #hero {
-    @apply pb-6 pt-8;
-  }
-  #hero h1 {
-    @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
-  }
-  #hero .rss-link {
-    @apply mb-6;
-  }
-  #hero .rss-icon {
-    @apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
-  }
-  #hero p {
-    @apply my-2;
-  }
-  .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
-  }
-  .social-links {
-    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+    @apply pb-8 pt-10;
   }
 
-  /* ===== Featured & Recent Posts Sections ===== */
+  .hero-meta {
+    @apply mb-4 flex items-center justify-between gap-3;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center rounded-full border border-skin-line/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.24em] text-skin-base/70;
+  }
+
+  #hero h1 {
+    @apply my-4 text-4xl font-semibold leading-none tracking-[-0.06em] text-skin-base sm:text-6xl;
+  }
+
+  #hero .rss-link {
+    @apply inline-flex items-center justify-center rounded-full border border-skin-line bg-skin-card/50 p-2 text-skin-base transition-all duration-200 hover:border-skin-accent/70 hover:text-skin-accent;
+  }
+
+  #hero .rss-icon {
+    @apply h-4 w-4 fill-current;
+  }
+
+  .lead {
+    @apply mt-5 max-w-2xl text-base leading-7 text-skin-base/80 sm:text-lg;
+  }
+
+  .sub-copy {
+    @apply mt-3 text-sm leading-7 text-skin-base/70;
+  }
+
+  .social-wrapper {
+    @apply mt-5 flex flex-col gap-3 sm:flex-row sm:items-center;
+  }
+
+  .social-links {
+    @apply whitespace-nowrap text-sm text-skin-base/70;
+  }
+
   #featured,
   #recent-posts {
-    @apply pb-6 pt-12;
+    @apply pb-6 pt-10;
   }
+
   #featured h2,
   #recent-posts h2 {
-    @apply text-2xl font-semibold tracking-wide;
+    @apply mb-5 text-xl font-semibold tracking-[-0.04em] text-skin-base;
   }
+
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
   }
