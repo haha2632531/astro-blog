@@ -1,5 +1,4 @@
 ---
-import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
 
 const currentYear = new Date().getFullYear();
@@ -11,35 +10,87 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class={`${noMarginTop ? "" : "mt-auto"}`}>
-  <Hr noPadding />
-  <div class="footer-wrapper">
-    <Socials centered />
-    <div class="copyright-wrapper">
-      <span>版权所有 &#169; {currentYear}</span>
-      <span class="separator">&nbsp;|&nbsp;</span>
-      <span>保留所有权利</span>
+<footer class={`site-footer ${noMarginTop ? "" : "mt-auto"}`}>
+  <div class="footer-inner">
+    <div class="footer-wrapper">
+      <Socials centered />
+      <div class="copyright-wrapper">
+        <span>版权所有 &#169; {currentYear}</span>
+        <span class="separator" aria-hidden="true">|</span>
+        <span>保留所有权利</span>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
-  footer {
-    @apply w-full;
+  /* 背景与顶部分隔线通栏铺满视口；宽度不再受 base.css / editorial.css
+     的 mx-auto + max-width 限制。颜色仍全部取自原有变量，不新增配色。 */
+  footer.site-footer {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding: 0;
   }
+
+  /* 内容层与正文阅读流对齐，左右留白随视口宽度平滑变化 */
+  .footer-inner {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 62rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 4vw, 2rem);
+  }
+
+  /* 窄屏：上下居中堆叠 */
   .footer-wrapper {
-    @apply flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
   }
-  .link-button {
-    @apply my-1 p-2 hover:rotate-6;
-  }
-  .link-button svg {
-    @apply scale-125;
-  }
+
   .copyright-wrapper {
-    @apply my-2 flex flex-col items-center whitespace-nowrap sm:flex-row;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.5rem;
+    font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
   }
   .separator {
-    @apply hidden sm:inline;
+    display: none;
+  }
+
+  /* ≥640px：版权靠左、社交图标靠右，两端对齐 */
+  @media (min-width: 640px) {
+    .footer-wrapper {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: left;
+    }
+    .copyright-wrapper {
+      justify-content: flex-start;
+    }
+    .separator {
+      display: inline;
+    }
+  }
+
+  /* 超窄屏收紧间距，避免版权文案与图标互相挤压 */
+  @media (max-width: 359px) {
+    .footer-wrapper {
+      gap: 0.25rem;
+    }
+    .footer-inner {
+      padding-inline: 0.75rem;
+    }
   }
 </style>
