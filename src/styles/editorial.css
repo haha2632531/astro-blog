@@ -180,6 +180,16 @@ main.home-page .post-list > li {
   border-color: var(--line);
 }
 
+/* 文章卡片列表容器：与 PostCard.astro 配套使用 */
+.card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 footer {
   background: var(--footer-bg);
   border-top: 1px solid var(--line);

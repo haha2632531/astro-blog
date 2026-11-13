@@ -1,0 +1,149 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Datetime from "./Datetime";
+import { slugifyStr } from "@utils/slugify";
+
+export interface Props {
+  href: string;
+  frontmatter: CollectionEntry<"blog">["data"];
+  secHeading?: boolean;
+}
+const { href, frontmatter, secHeading = true } = Astro.props;
+const { title, pubDatetime, modDatetime, description, tags, ogImage } =
+  frontmatter;
+
+const cover =
+  typeof ogImage === "string" ? ogImage : ogImage?.src ?? "/astropaper-og.jpg";
+const primaryTag = tags.length ? tags[0] : "未分类";
+const primaryTagSlug = slugifyStr(primaryTag);
+
+// 列表页用 h2，首页（section 已有 h2）用 h3，保持标题层级语义
+const TitleTag = secHeading ? "h2" : "h3";
+---
+
+<li class="post-card">
+  <article class="post-card-inner">
+    <a class="post-thumb" href={href} aria-label={title}>
+      <img
+        src={cover}
+        alt={`${title} 封面`}
+        loading="lazy"
+        width="200"
+        height="200"
+      />
+    </a>
+    <div class="post-body">
+      <div class="post-meta-top">
+        <a class="post-cat" href={`/tags/${primaryTagSlug}/`}>{primaryTag}</a>
+        <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
+      </div>
+      <TitleTag class="post-card__title"><a href={href}>{title}</a></TitleTag>
+      <p class="post-excerpt">{description}</p>
+    </div>
+  </article>
+</li>
+
+<style>
+  .post-card {
+    list-style: none;
+  }
+  .post-card-inner {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: 1.1rem;
+    align-items: stretch;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    transition:
+      transform 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .post-card-inner:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+
+  .post-thumb {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .post-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.45rem;
+    color: var(--muted);
+  }
+  .post-cat {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .post-cat:hover {
+    text-decoration: underline;
+  }
+
+  /* 标题字体规格取自 aijun.org (ComBox 主题)：阿里普惠体 600、行高 1.35、
+     字距 -0.01em；32px 单行放不进卡片右栏，改为两行截断。颜色沿用 --ink/--accent。 */
+  .post-card__title {
+    margin: 0 0 0.5rem;
+    font-family: "Ali PuHuiTi", var(--display-font), sans-serif;
+    font-size: clamp(1.375rem, 1.6vw + 0.9rem, 1.75rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .post-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .post-card-inner:hover .post-card__title {
+    color: var(--accent);
+  }
+
+  .post-excerpt {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  @media (max-width: 560px) {
+    .post-card-inner {
+      grid-template-columns: 1fr;
+    }
+    .post-thumb {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

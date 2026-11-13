@@ -1,0 +1,34 @@
+---
+import WidgetCard from "./WidgetCard.astro";
+import WidgetSearch from "./WidgetSearch.astro";
+import WidgetTags from "./WidgetTags.astro";
+import WidgetRecent from "./WidgetRecent.astro";
+---
+
+<aside class="sidebar" aria-label="站点侧栏">
+  <WidgetCard id="widget-search" title="搜索">
+    <WidgetSearch />
+  </WidgetCard>
+  <WidgetCard id="widget-tags" title="标签">
+    <WidgetTags />
+  </WidgetCard>
+  <WidgetCard id="widget-recent" title="最近发表">
+    <WidgetRecent />
+  </WidgetCard>
+</aside>
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  @media (max-width: 1024px) {
+    .sidebar {
+      position: static;
+      order: 2;
+    }
+  }
+</style>

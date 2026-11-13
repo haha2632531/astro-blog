@@ -1,0 +1,9 @@
+/* 阿里普惠体 —— 用于文章卡片标题，规格取自 aijun.org (ComBox 主题)。
+   配色仍走 editorial.css 的变量，这里只定义字体，不改动任何颜色。 */
+@font-face {
+  font-family: "Ali PuHuiTi";
+  src: url("/fonts/AliPuHuiTi_Regular.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
