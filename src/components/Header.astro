@@ -1,7 +1,6 @@
 ---
 import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
-import LinkButton from "./LinkButton.astro";
 
 export interface Props {
   activeNav?: "posts" | "services" | "resources" | "about" | "search";
@@ -56,47 +55,41 @@ const { activeNav } = Astro.props;
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
-            <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
-              文章
-            </a>
+            <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>文章</a>
           </li>
           <li>
-            <a href="/services/" class={activeNav === "services" ? "active" : ""}>
-              技术服务
-            </a>
+            <a href="/services/" class={activeNav === "services" ? "active" : ""}>技术服务</a>
           </li>
           <li>
-            <a href="/resources/" class={activeNav === "resources" ? "active" : ""}>
-              免费资源
-            </a>
+            <a href="/resources/" class={activeNav === "resources" ? "active" : ""}>免费资源</a>
           </li>
           <li>
-            <a href="/about/" class={activeNav === "about" ? "active" : ""}>
-              关于我
-            </a>
+            <a href="/about/" class={activeNav === "about" ? "active" : ""}>关于我</a>
           </li>
-          <li>
-            <LinkButton
-              href="/search/"
-              className={`focus-outline p-3 sm:p-1 ${
-                activeNav === "search" ? "active" : ""
-              } flex`}
-              ariaLabel="搜索"
-              title="搜索"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="scale-125 sm:scale-100"
-                ><path
-                  d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.737l2.8 1.337s.275.224.653.596c.371.367.87.858 1.384 1.367.853.842 1.887.99 2.308.568.42-.42.272-1.455-.57-2.308zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
-                ></path>
-              </svg>
-              <span class="sr-only">搜索</span>
-            </LinkButton>
+          <li class="nav-search">
+            <form action="/search/" method="get" role="search">
+              <label class="sr-only" for="nav-search-input">搜索文章</label>
+              <input
+                id="nav-search-input"
+                type="search"
+                name="q"
+                placeholder="搜索文章..."
+                autocomplete="off"
+              />
+              <button type="submit" aria-label="搜索">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                  <path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                </svg>
+              </button>
+            </form>
+          </li>
+          <li class="nav-login">
+            <a href="/login/">登录</a>
           </li>
           {
             SITE.lightAndDarkMode && (
-              <li>
+              <li class="nav-theme">
                 <button
                   id="theme-btn"
                   class="focus-outline"
@@ -104,11 +97,12 @@ const { activeNav } = Astro.props;
                   aria-label="auto"
                   aria-live="polite"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
-                    <path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.8[...]"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.7 14.2A8.5 8.5 0 0 1 9.8 3.3 8.5 8.5 0 1 0 20.7 14.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
-                  <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg">
-                    <path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993z"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
                   </svg>
                 </button>
               </li>
@@ -145,26 +139,35 @@ const { activeNav } = Astro.props;
     @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
   }
   nav ul {
-    @apply mt-4 grid w-44 grid-cols-2 grid-rows-4 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-5 sm:gap-y-0;
+    @apply mt-4 grid w-full grid-cols-2 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:grid-flow-col sm:auto-cols-max sm:items-center sm:gap-x-3 sm:gap-y-0;
   }
   nav ul li {
-    @apply col-span-2 flex items-center justify-center;
+    @apply col-span-2 flex items-center justify-center sm:col-span-1;
   }
   nav ul li a {
     @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
   }
-  nav ul li:nth-last-child(2) a {
-    @apply w-auto;
+  nav ul li.nav-search {
+    @apply col-span-2 sm:col-span-1;
   }
-  nav ul li:nth-last-child(1),
-  nav ul li:nth-last-child(2) {
+  .nav-search form {
+    @apply flex w-full items-center rounded border border-skin-line bg-skin-fill sm:w-40;
+  }
+  .nav-search input {
+    @apply min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-skin-base outline-none placeholder:text-skin-muted;
+  }
+  .nav-search form button {
+    @apply px-2 py-2;
+  }
+  .nav-search svg {
+    @apply h-5 w-5;
+  }
+  nav ul li.nav-login,
+  nav ul li.nav-theme {
     @apply col-span-1;
   }
   nav a.active {
     @apply underline decoration-wavy decoration-2 underline-offset-4;
-  }
-  nav a.active svg {
-    @apply fill-skin-accent;
   }
 
   nav button {
@@ -196,7 +199,6 @@ const { activeNav } = Astro.props;
 
 <script>
   function toggleNav() {
-    // Toggle menu
     const menuBtn = document.querySelector(".hamburger-menu");
     const menuIcon = document.querySelector(".menu-icon");
     const menuItems = document.querySelector("#menu-items");
@@ -205,16 +207,11 @@ const { activeNav } = Astro.props;
       const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
       menuIcon?.classList.toggle("is-active");
       menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute(
-        "aria-label",
-        menuExpanded ? "打开菜单" : "关闭菜单"
-      );
+      menuBtn.setAttribute("aria-label", menuExpanded ? "打开菜单" : "关闭菜单");
       menuItems?.classList.toggle("display-none");
     });
   }
 
   toggleNav();
-
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
