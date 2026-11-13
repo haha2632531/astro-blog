@@ -154,7 +154,10 @@ const { activeNav } = Astro.props;
     @apply flex w-full items-center rounded border border-skin-line bg-skin-fill sm:w-40;
   }
   .nav-search input {
-    @apply min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-skin-base outline-none placeholder:opacity-75;
+    @apply min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-skin-base outline-none;
+  }
+  .nav-search input::placeholder {
+    opacity: 0.75;
   }
   .nav-search form button {
     @apply px-2 py-2;
