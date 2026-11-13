@@ -1,5 +1,5 @@
 ---
-import Socials from "./Socials.astro";
+import { SITE } from "@config";
 
 const currentYear = new Date().getFullYear();
 
@@ -12,20 +12,30 @@ const { noMarginTop = false } = Astro.props;
 
 <footer class={`site-footer ${noMarginTop ? "" : "mt-auto"}`}>
   <div class="footer-inner">
-    <div class="footer-wrapper">
-      <Socials centered />
-      <div class="copyright-wrapper">
-        <span>版权所有 &#169; {currentYear}</span>
-        <span class="separator" aria-hidden="true">|</span>
-        <span>保留所有权利</span>
-      </div>
-    </div>
+    <a
+      class="footer-rss"
+      href="/rss.xml"
+      aria-label="订阅 RSS"
+      title="订阅 RSS"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M5 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path>
+        <path d="M4 4a16 16 0 0 1 16 16"></path>
+        <path d="M4 11a9 9 0 0 1 9 9"></path>
+      </svg>
+    </a>
+    <p class="footer-line">&#169; {currentYear} &#183; {SITE.title}</p>
+    <p class="footer-sub">由 Astro 构建 &#183; 基于 AstroPaper 主题</p>
   </div>
 </footer>
 
 <style>
-  /* 背景与顶部分隔线通栏铺满视口；宽度不再受 base.css / editorial.css
-     的 mx-auto + max-width 限制。颜色仍全部取自原有变量，不新增配色。 */
+  /* 沿用上一轮的通栏自适应结构：背景与顶部分隔线铺满视口，
+     内容层限宽居中、左右留白随屏宽变化。仅把内容改成截图的居中两行。 */
   footer.site-footer {
     display: block;
     width: 100%;
@@ -33,62 +43,49 @@ const { noMarginTop = false } = Astro.props;
     margin-inline: 0;
     padding: 0;
   }
-
-  /* 内容层与正文阅读流对齐，左右留白随视口宽度平滑变化 */
   .footer-inner {
     box-sizing: border-box;
     width: 100%;
     max-width: 62rem;
     margin-inline: auto;
     padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 4vw, 2rem);
-  }
-
-  /* 窄屏：上下居中堆叠 */
-  .footer-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     text-align: center;
   }
 
-  .copyright-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+  .footer-rss {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0 0.5rem;
+    color: var(--muted);
+  }
+  .footer-rss:hover {
+    color: var(--accent);
+  }
+  .footer-rss svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .footer-line,
+  .footer-sub {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
     font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);
     line-height: 1.6;
     font-variant-numeric: tabular-nums;
-    color: var(--muted);
   }
-  .separator {
-    display: none;
-  }
-
-  /* ≥640px：版权靠左、社交图标靠右，两端对齐 */
-  @media (min-width: 640px) {
-    .footer-wrapper {
-      flex-direction: row-reverse;
-      justify-content: space-between;
-      gap: 1rem;
-      text-align: left;
-    }
-    .copyright-wrapper {
-      justify-content: flex-start;
-    }
-    .separator {
-      display: inline;
-    }
+  .footer-sub {
+    margin-top: 0.25rem;
+    opacity: 0.75;
+    font-size: 0.75rem;
   }
 
-  /* 超窄屏收紧间距，避免版权文案与图标互相挤压 */
   @media (max-width: 359px) {
-    .footer-wrapper {
-      gap: 0.25rem;
-    }
     .footer-inner {
       padding-inline: 0.75rem;
     }

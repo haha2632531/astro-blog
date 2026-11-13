@@ -6,6 +6,7 @@ import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import PostCard from "@components/PostCard.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import getPostStats from "@utils/postStats";
 import { SITE } from "@config";
 
 const posts = await getCollection("blog");
@@ -21,9 +22,17 @@ const recentPosts = sortedPosts.slice(0, 8);
     <div class="home-single-col">
       <ul class="card-list">
         {
-          recentPosts.map(({ data, slug }) => (
-            <PostCard href={`/posts/${slug}/`} frontmatter={data} />
-          ))
+          recentPosts.map(({ data, slug, body }) => {
+            const { count, minutes } = getPostStats(body);
+            return (
+              <PostCard
+                href={`/posts/${slug}/`}
+                frontmatter={data}
+                wordCount={count}
+                readingMinutes={minutes}
+              />
+            );
+          })
         }
       </ul>
 
@@ -64,8 +73,8 @@ const recentPosts = sortedPosts.slice(0, 8);
   }
 
   .all-posts-btn-wrapper {
-    margin: 2rem 0 4rem;
-    text-align: left;
+    margin: 2rem 0 3rem;
+    text-align: center;
   }
 
   .all-posts-btn-wrapper a {

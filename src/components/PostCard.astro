@@ -1,119 +1,114 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Datetime from "./Datetime";
 import { slugifyStr } from "@utils/slugify";
 import { tagLabel } from "@utils/tagLabel";
+import { formatCount } from "@utils/postStats";
 
 export interface Props {
   href: string;
   frontmatter: CollectionEntry<"blog">["data"];
   secHeading?: boolean;
+  wordCount?: number;
+  readingMinutes?: number;
 }
-const { href, frontmatter, secHeading = true } = Astro.props;
-const { title, pubDatetime, modDatetime, description, tags, ogImage } =
-  frontmatter;
+const {
+  href,
+  frontmatter,
+  secHeading = true,
+  wordCount,
+  readingMinutes,
+} = Astro.props;
+const { title, pubDatetime, modDatetime, description, tags } = frontmatter;
 
-const cover =
-  typeof ogImage === "string" ? ogImage : ogImage?.src ?? "/astropaper-og.jpg";
-const primaryTag = tags.length ? tags[0] : "未分类";
-const primaryTagSlug = slugifyStr(primaryTag);
+// 正文为空的示例文章不显示「0 字 · 1 分钟」，只保留日期
+const hasStats = wordCount !== undefined && wordCount > 0;
 
 // 列表页用 h2，首页（section 已有 h2）用 h3，保持标题层级语义
 const TitleTag = secHeading ? "h2" : "h3";
+
+const isModified = Boolean(modDatetime && modDatetime > pubDatetime);
+const date = new Date(isModified ? modDatetime! : pubDatetime);
+const dateLabel = isModified ? "更新于" : "发布于";
+const dateText = date
+  .toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+  .replace(/(\d+)年(\d+)月(\d+)日/, "$1 年 $2 月 $3 日");
 ---
 
 <li class="post-card">
   <article class="post-card-inner">
-    <a class="post-thumb" href={href} aria-label={title}>
-      <img
-        src={cover}
-        alt={`${title} 封面`}
-        loading="lazy"
-        width="200"
-        height="200"
-      />
-    </a>
-    <div class="post-body">
-      <div class="post-meta-top">
-        <a class="post-cat" href={`/tags/${primaryTagSlug}/`}>
-          {tagLabel(primaryTag)}
-        </a>
-        <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-      </div>
-      <TitleTag class="post-card__title"><a href={href}>{title}</a></TitleTag>
-      <p class="post-excerpt">{description}</p>
+    <TitleTag class="post-card__title"><a href={href}>{title}</a></TitleTag>
+
+    <div class="post-meta">
+      <span>{dateLabel}</span>
+      <time datetime={date.toISOString()}>{dateText}</time>
+      {
+        hasStats && (
+          <>
+            <span class="meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>{formatCount(wordCount)} 字</span>
+            <span class="meta-dot" aria-hidden="true">
+              ·
+            </span>
+            <span>{readingMinutes} 分钟</span>
+          </>
+        )
+      }
     </div>
+
+    <p class="post-excerpt">{description}</p>
+
+    <ul class="post-tags">
+      {
+        tags.map(tag => (
+          <li>
+            <a href={`/tags/${slugifyStr(tag)}/`}>#{tagLabel(tag)}</a>
+          </li>
+        ))
+      }
+    </ul>
   </article>
 </li>
 
 <style>
-  /* 单栏阅读流条目：去掉卡片边框、圆角、阴影与位移，
-     分隔线由 editorial.css 的 .card-list > li 统一提供。颜色全部沿用现有变量。 */
+  /* 卡片网格条目：白底圆角、等高、纯文字（无缩略图），字段顺序按截图：
+     标题 → 发布于…·字数·时长 → 两行摘要 → 底部 # 标签。
+     颜色全部取自现有变量，不新增配色。 */
   .post-card {
     list-style: none;
-    padding: 1.5rem 0;
-  }
-  .post-card-inner {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 1.1rem;
-    align-items: start;
-  }
-
-  .post-thumb {
-    display: block;
-    aspect-ratio: 1 / 1;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    background: var(--surface);
-  }
-  .post-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .post-body {
-    display: flex;
-    flex-direction: column;
     min-width: 0;
   }
-  .post-meta-top {
+  .post-card-inner {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.375rem;
-    color: var(--muted);
-    font-size: 0.8125rem;
-    font-variant-numeric: tabular-nums;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    border: 1px solid var(--line);
+    border-radius: 0.875rem;
+    background: var(--white);
+    transition:
+      border-color 0.18s ease,
+      transform 0.18s ease;
   }
-  .post-meta-top :global(span) {
-    font-size: 0.8125rem;
-  }
-  .post-meta-top :global(svg) {
-    width: 1rem;
-    height: 1rem;
-  }
-  .post-cat {
-    color: var(--accent);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .post-cat:hover {
-    text-decoration: underline;
+  .post-card-inner:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
   }
 
-  /* 标题规格取自 aijun.org (ComBox)：阿里普惠体 2rem / 600 / 1.4 / -0.01em。
-     中文长标题保留两行截断，不照抄原站桌面端的单行省略。 */
+  /* 标题仍用阿里普惠体；普通卡 1.125rem，
+     首条通栏大卡由 editorial.css 覆盖为 clamp(1.5rem, 2.4vw, 1.875rem)。 */
   .post-card__title {
     margin: 0 0 0.5rem;
     font-family: "Ali PuHuiTi", var(--display-font), sans-serif;
-    font-size: 2rem;
+    font-size: 1.125rem;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.45;
     letter-spacing: -0.01em;
     color: var(--ink);
     display: -webkit-box;
@@ -129,24 +124,47 @@ const TitleTag = secHeading ? "h2" : "h3";
     color: var(--accent);
   }
 
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.4rem;
+    margin: 0 0 0.75rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+  }
+  .meta-dot {
+    opacity: 0.65;
+  }
+
   .post-excerpt {
     margin: 0;
     color: var(--muted);
-    font-size: 0.9375rem;
-    line-height: 1.4;
+    font-size: 0.875rem;
+    line-height: 1.6;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
 
-  @media (max-width: 640px) {
-    .post-card-inner {
-      grid-template-columns: 4.5rem 1fr;
-      gap: 0.9rem;
-    }
-    .post-card__title {
-      font-size: 1.625rem;
-    }
+  /* margin-top:auto 让标签贴底，同行两张卡等高时底部对齐 */
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    list-style: none;
+    margin: auto 0 0;
+    padding: 1rem 0 0;
+    font-size: 0.75rem;
+  }
+  .post-tags a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .post-tags a:hover {
+    color: var(--accent);
   }
 </style>

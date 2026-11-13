@@ -1,57 +1,112 @@
 ---
-import LinkButton from "./LinkButton.astro";
-
 export interface Props {
   currentPage: number;
   totalPages: number;
   prevUrl: string;
   nextUrl: string;
+  /** 页码链接前缀，如 /posts 或 /tags/<tag>；第 1 页为 basePath/ */
+  basePath?: string;
 }
 
-const { currentPage, totalPages, prevUrl, nextUrl } = Astro.props;
+const {
+  currentPage,
+  totalPages,
+  prevUrl,
+  nextUrl,
+  basePath = "/posts",
+} = Astro.props;
 
-const prev = currentPage > 1 ? "" : "disabled";
-const next = currentPage < totalPages ? "" : "disabled";
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+const pageHref = (p: number) =>
+  p === 1 ? `${basePath}/` : `${basePath}/${p}/`;
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
 ---
 
 {
   totalPages > 1 && (
     <nav class="pagination-wrapper" aria-label="分页导航">
-      <LinkButton
-        disabled={prev === "disabled"}
-        href={prevUrl}
-        className={`mr-4 select-none ${prev}`}
-        ariaLabel="上一页"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class={`${prev}-svg`}>
-          <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
-        </svg>
-        上一页
-      </LinkButton>
-      第 {currentPage} 页 / 共 {totalPages} 页
-      <LinkButton
-        disabled={next === "disabled"}
-        href={nextUrl}
-        className={`ml-4 select-none ${next}`}
-        ariaLabel="下一页"
-      >
-        下一页
-        <svg xmlns="http://www.w3.org/2000/svg" class={`${next}-svg`}>
-          <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
-        </svg>
-      </LinkButton>
+      {hasPrev && (
+        <a class="page-nav" href={prevUrl} aria-label="上一页">
+          上一页
+        </a>
+      )}
+
+      <ul class="page-list">
+        {pages.map(p => (
+          <li>
+            {p === currentPage ? (
+              <span class="page-current" aria-current="page">
+                {p}
+              </span>
+            ) : (
+              <a class="page-link" href={pageHref(p)} aria-label={`第 ${p} 页`}>
+                {p}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      {hasNext && (
+        <a class="page-nav" href={nextUrl} aria-label="下一页">
+          下一页
+        </a>
+      )}
     </nav>
   )
 }
 
 <style>
+  /* 居中页码：当前页为深色圆形，其余为浅灰数字，两侧是文字翻页。
+     颜色全部取自现有变量，不新增配色。 */
   .pagination-wrapper {
-    @apply mb-8 mt-auto flex justify-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
   }
-  .disabled {
-    @apply pointer-events-none select-none opacity-50 hover:text-skin-base group-hover:fill-skin-base;
+  .page-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .disabled-svg {
-    @apply group-hover:!fill-skin-base;
+  .page-current,
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+  }
+  .page-current {
+    background: var(--primary-bg);
+    color: var(--primary-ink);
+    font-weight: 600;
+  }
+  .page-link {
+    color: var(--muted);
+  }
+  .page-link:hover {
+    color: var(--accent);
+  }
+  .page-nav {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    text-decoration: none;
+  }
+  .page-nav:hover {
+    color: var(--accent);
   }
 </style>

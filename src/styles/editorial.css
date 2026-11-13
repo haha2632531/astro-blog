@@ -147,21 +147,41 @@ main.home-page {
 
 /* Hero 相关的样式已随首页改造移除；:root 中的配色变量保持原样，供其他页面使用。 */
 
-/* 文章列表容器：单栏阅读流，条目之间只用细分隔线（取自 aijun.org 架构）。
-   配色沿用 --line，不引入任何新颜色。 */
+/* 文章列表容器：卡片网格（首条通栏大卡 + 两列等宽卡片）。
+   首条占满一行后，若剩余条目为奇数，最后一条会自动撑满整行 ——
+   即 li:last-child:nth-child(even)，与截图中的 flex-wrap 效果一致。
+   配色沿用 --line / --white，不引入任何新颜色。 */
 .card-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
 }
-.card-list > li {
-  border-top: 1px solid var(--line);
+.card-list > li:first-child {
+  grid-column: 1 / -1;
 }
-.card-list > li:last-child {
-  border-bottom: 1px solid var(--line);
+.card-list > li:last-child:nth-child(even) {
+  grid-column: 1 / -1;
+}
+
+/* 首条通栏大卡：标题与内边距放大一档（卡片本体样式在 PostCard.astro） */
+.card-list > li:first-child .post-card-inner {
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+}
+.card-list > li:first-child .post-card__title {
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .card-list {
+    grid-template-columns: 1fr;
+  }
+  .card-list > li:first-child .post-card__title {
+    font-size: 1.375rem;
+  }
 }
 
 footer {

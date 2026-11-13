@@ -6,6 +6,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
 import PostCard from "@components/PostCard.astro";
+import getPostStats from "@utils/postStats";
 import { SITE } from "@config";
 
 export interface Props {
@@ -22,19 +23,28 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
   <ContentSingle pageTitle="文章" pageDesc="全部已发布的文章，按更新时间排列。">
     <ul class="card-list">
       {
-        paginatedPosts.map(({ data, slug }) => (
-          <PostCard href={`/posts/${slug}/`} frontmatter={data} />
-        ))
+        paginatedPosts.map(({ data, slug, body }) => {
+          const { count, minutes } = getPostStats(body);
+          return (
+            <PostCard
+              href={`/posts/${slug}/`}
+              frontmatter={data}
+              wordCount={count}
+              readingMinutes={minutes}
+            />
+          );
+        })
       }
     </ul>
 
     <Pagination
       {currentPage}
       {totalPages}
+      basePath="/posts"
       prevUrl={`/posts${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
       nextUrl={`/posts/${currentPage + 1}/`}
     />
   </ContentSingle>
 
-  <Footer noMarginTop={totalPages > 1} />
+  <Footer />
 </Layout>

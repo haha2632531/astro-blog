@@ -8,6 +8,7 @@ import PostCard from "@components/PostCard.astro";
 import Pagination from "@components/Pagination.astro";
 import { SITE } from "@config";
 import { tagLabel } from "@utils/tagLabel";
+import getPostStats from "@utils/postStats";
 
 export interface Props {
   currentPage: number;
@@ -30,15 +31,24 @@ const displayTag = tagLabel(tagName);
   >
     <ul class="card-list">
       {
-        paginatedPosts.map(({ data, slug }) => (
-          <PostCard href={`/posts/${slug}/`} frontmatter={data} />
-        ))
+        paginatedPosts.map(({ data, slug, body }) => {
+          const { count, minutes } = getPostStats(body);
+          return (
+            <PostCard
+              href={`/posts/${slug}/`}
+              frontmatter={data}
+              wordCount={count}
+              readingMinutes={minutes}
+            />
+          );
+        })
       }
     </ul>
 
     <Pagination
       {currentPage}
       {totalPages}
+      basePath={`/tags/${tag}`}
       prevUrl={`/tags/${tag}${
         currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""
       }/`}
@@ -46,5 +56,5 @@ const displayTag = tagLabel(tagName);
     />
   </ContentSingle>
 
-  <Footer noMarginTop={totalPages > 1} />
+  <Footer />
 </Layout>
