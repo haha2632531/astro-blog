@@ -26,7 +26,14 @@ function setPreference() {
 function reflectPreference() {
   document.firstElementChild.setAttribute("data-theme", themeValue);
 
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document
+    .querySelector("#theme-btn")
+    ?.setAttribute(
+      "aria-label",
+      themeValue === "dark"
+        ? "当前深色模式，点击切换"
+        : "当前浅色模式，点击切换"
+    );
 
   // Get a reference to the body element
   const body = document.body;

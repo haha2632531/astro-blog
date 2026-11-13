@@ -2,12 +2,12 @@
 author: Simon Smale
 pubDatetime: 2024-01-08T18:16:00.000Z
 modDatetime:
-title: How to add a new Social Icon to AstroPaper
+title: 为 AstroPaper 添加新的社交图标
 featured: false
 draft: false
 tags:
   - FAQ
-description: How to add a new social icon to AstroPaper
+description: 介绍如何为站点新增自定义社交平台图标。
 ---
 
 Hot new platform? Niche corner of the internet? Or one specific to your area? This post will guide you through how to add a new social icon to the theme.

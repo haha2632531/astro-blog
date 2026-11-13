@@ -16,7 +16,7 @@ const next = currentPage < totalPages ? "" : "disabled";
 
 {
   totalPages > 1 && (
-    <nav class="pagination-wrapper" aria-label="Pagination">
+    <nav class="pagination-wrapper" aria-label="分页导航">
       <LinkButton
         disabled={prev === "disabled"}
         href={prevUrl}
@@ -28,7 +28,7 @@ const next = currentPage < totalPages ? "" : "disabled";
         </svg>
         上一页
       </LinkButton>
-      {currentPage} / {totalPages}
+      第 {currentPage} 页 / 共 {totalPages} 页
       <LinkButton
         disabled={next === "disabled"}
         href={nextUrl}

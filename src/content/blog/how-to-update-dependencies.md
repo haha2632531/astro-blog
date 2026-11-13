@@ -1,5 +1,5 @@
 ---
-title: How to update dependencies of AstroPaper
+title: 更新 AstroPaper 的项目依赖
 author: Sat Naing
 pubDatetime: 2023-07-20T15:33:05.569Z
 slug: how-to-update-dependencies
@@ -8,7 +8,7 @@ draft: false
 ogImage: /assets/forrest-gump-quote.webp
 tags:
   - FAQ
-description: How to update project dependencies and AstroPaper template.
+description: 升级项目依赖与 AstroPaper 模板的操作步骤。
 ---
 
 Updating the dependencies of a project can be tedious. However, neglecting to update project dependencies is not a good idea either 😬. In this post, I will share how I usually update my projects, focusing on AstroPaper as an example. Nonetheless, these steps can be applied to other js/node projects as well.

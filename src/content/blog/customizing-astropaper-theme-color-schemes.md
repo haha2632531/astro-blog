@@ -1,15 +1,13 @@
 ---
 author: Sat Naing
 pubDatetime: 2022-09-25T15:20:35Z
-title: Customizing AstroPaper theme color schemes
+title: 自定义 AstroPaper 主题配色
 featured: false
 draft: false
 tags:
   - color-schemes
   - docs
-description:
-  How you can enable/disable light & dark mode; and customize color schemes
-  of AstroPaper theme.
+description: 通过 CSS 变量调整浅色与深色配色，并控制明暗模式开关。
 ---
 
 This post will explain how you can enable/disable light & dark mode for the website. Moreover, you'll learn how you can customize color schemes of the entire website.

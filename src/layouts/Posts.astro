@@ -17,10 +17,10 @@ export interface Props {
 const { currentPage, totalPages, paginatedPosts } = Astro.props;
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`文章 | ${SITE.title}`}>
   <Header activeNav="posts" />
   <ContentWithSidebar
-    pageTitle="Posts"
+    pageTitle="文章"
     pageDesc="全部已发布的文章，按更新时间排列。"
   >
     <ul class="card-list">

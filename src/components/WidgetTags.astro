@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import getTagsWithCount from "@utils/getTagsWithCount";
+import { tagLabel } from "@utils/tagLabel";
 
 const posts = await getCollection("blog");
 const tags = getTagsWithCount(posts).slice(0, 20);
@@ -11,7 +12,7 @@ const tags = getTagsWithCount(posts).slice(0, 20);
     tags.map(({ tag, tagName, count }) => (
       <li>
         <a href={`/tags/${tag}/`}>
-          {tagName} <span class="count">({count})</span>
+          {tagLabel(tagName)} <span class="count">（{count}）</span>
         </a>
       </li>
     ))

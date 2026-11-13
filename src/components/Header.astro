@@ -55,16 +55,26 @@ const { activeNav } = Astro.props;
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
-            <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>文章</a>
+            <a href="/posts/" class={activeNav === "posts" ? "active" : ""}
+              >文章</a
+            >
           </li>
           <li>
-            <a href="/services/" class={activeNav === "services" ? "active" : ""}>技术服务</a>
+            <a
+              href="/services/"
+              class={activeNav === "services" ? "active" : ""}>技术服务</a
+            >
           </li>
           <li>
-            <a href="/resources/" class={activeNav === "resources" ? "active" : ""}>免费资源</a>
+            <a
+              href="/resources/"
+              class={activeNav === "resources" ? "active" : ""}>免费资源</a
+            >
           </li>
           <li>
-            <a href="/about/" class={activeNav === "about" ? "active" : ""}>关于我</a>
+            <a href="/about/" class={activeNav === "about" ? "active" : ""}
+              >关于我</a
+            >
           </li>
           <li class="nav-search">
             <form action="/search/" method="get" role="search">
@@ -77,15 +87,34 @@ const { activeNav } = Astro.props;
                 autocomplete="off"
               />
               <button type="submit" aria-label="搜索">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                  <path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="10.8"
+                    cy="10.8"
+                    r="6.8"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"></circle>
+                  <path
+                    d="m16 16 5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"></path>
                 </svg>
               </button>
             </form>
           </li>
           <li class="nav-login">
-            <a href="https://app.pagescms.org/haha2632531/astro-blog/main/collection/posts" target="_blank" rel="noopener noreferrer">后台登录</a>
+            <a
+              href="https://app.pagescms.org/haha2632531/astro-blog/main/collection/posts"
+              target="_blank"
+              rel="noopener noreferrer">后台登录</a
+            >
           </li>
           {
             SITE.lightAndDarkMode && (
@@ -94,15 +123,45 @@ const { activeNav } = Astro.props;
                   id="theme-btn"
                   class="focus-outline"
                   title="切换浅色/深色模式"
-                  aria-label="auto"
+                  aria-label="切换深浅模式"
                   aria-live="polite"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M20.7 14.2A8.5 8.5 0 0 1 9.8 3.3 8.5 8.5 0 1 0 20.7 14.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="moon-svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M20.7 14.2A8.5 8.5 0 0 1 9.8 3.3 8.5 8.5 0 1 0 20.7 14.2Z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
                   </svg>
-                  <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    id="sun-svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
                   </svg>
                 </button>
               </li>
@@ -210,7 +269,10 @@ const { activeNav } = Astro.props;
       const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
       menuIcon?.classList.toggle("is-active");
       menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute("aria-label", menuExpanded ? "打开菜单" : "关闭菜单");
+      menuBtn.setAttribute(
+        "aria-label",
+        menuExpanded ? "打开菜单" : "关闭菜单"
+      );
       menuItems?.classList.toggle("display-none");
     });
   }
