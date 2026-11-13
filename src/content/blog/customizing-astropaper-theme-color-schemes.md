@@ -6,7 +6,7 @@ title: 二十年如梦一场
 featured: true
 draft: false
 tags:
-  - color-schemes
+  - agent
   - docs
 description: 通过 CSS 变量调整浅色与深色配色，并控制明暗模式开关。
 ---
