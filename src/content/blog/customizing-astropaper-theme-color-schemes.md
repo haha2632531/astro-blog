@@ -7,7 +7,7 @@ featured: true
 draft: false
 tags:
   - agent
-  - docs
+  - ai
 description: 通过 CSS 变量调整浅色与深色配色，并控制明暗模式开关。
 ---
 又逢农历七月十五，恍然之间，已是整整二十年。
