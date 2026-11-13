@@ -3,7 +3,7 @@ author: Sat Naing
 pubDatetime: 2026-11-13
 modDatetime: 2026-11-13
 title: 二十年如梦一场
-featured: false
+featured: true
 draft: false
 tags:
   - color-schemes
