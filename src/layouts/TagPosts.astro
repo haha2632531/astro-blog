@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import ContentWithSidebar from "@layouts/ContentWithSidebar.astro";
+import ContentSingle from "@layouts/ContentSingle.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import PostCard from "@components/PostCard.astro";
@@ -23,7 +23,7 @@ const displayTag = tagLabel(tagName);
 
 <Layout title={`标签：${displayTag} | ${SITE.title}`}>
   <Header activeNav="tags" />
-  <ContentWithSidebar
+  <ContentSingle
     pageTitle={[`标签：`, `${displayTag}`]}
     titleTransition={tag}
     pageDesc={`所有带有「${displayTag}」标签的文章。`}
@@ -44,7 +44,7 @@ const displayTag = tagLabel(tagName);
       }/`}
       nextUrl={`/tags/${tag}/${currentPage + 1}/`}
     />
-  </ContentWithSidebar>
+  </ContentSingle>
 
   <Footer noMarginTop={totalPages > 1} />
 </Layout>

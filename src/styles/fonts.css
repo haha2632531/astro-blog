@@ -1,5 +1,6 @@
-/* 阿里普惠体 —— 用于文章卡片标题，规格取自 aijun.org (ComBox 主题)。
-   配色仍走 editorial.css 的变量，这里只定义字体，不改动任何颜色。 */
+/* 阿里普惠体 —— 规格取自 aijun.org (ComBox 主题)，字体文件与源站一致。
+   现在作为 --display-font 的首选项在全站生效（正文、导航、文章标题），
+   标题排版规格见 components/PostCard.astro。这里只定义字体，不改动任何颜色。 */
 @font-face {
   font-family: "Ali PuHuiTi";
   src: url("/fonts/AliPuHuiTi_Regular.woff2") format("woff2");

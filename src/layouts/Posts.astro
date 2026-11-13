@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import ContentWithSidebar from "@layouts/ContentWithSidebar.astro";
+import ContentSingle from "@layouts/ContentSingle.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
@@ -19,10 +19,7 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
 
 <Layout title={`文章 | ${SITE.title}`}>
   <Header activeNav="posts" />
-  <ContentWithSidebar
-    pageTitle="文章"
-    pageDesc="全部已发布的文章，按更新时间排列。"
-  >
+  <ContentSingle pageTitle="文章" pageDesc="全部已发布的文章，按更新时间排列。">
     <ul class="card-list">
       {
         paginatedPosts.map(({ data, slug }) => (
@@ -37,7 +34,7 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
       prevUrl={`/posts${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
       nextUrl={`/posts/${currentPage + 1}/`}
     />
-  </ContentWithSidebar>
+  </ContentSingle>
 
   <Footer noMarginTop={totalPages > 1} />
 </Layout>
