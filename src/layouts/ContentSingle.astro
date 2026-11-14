@@ -27,9 +27,13 @@ const { pageTitle, titleTransition, pageDesc } = Astro.props;
 <style>
   /* 单栏阅读流：宽度沿用原有 62rem 容器，配色不变 */
   .content-single {
-    max-width: 62rem;
+    /* body 是 flex column：必须给确定宽度，否则 auto 外边距会让
+       flex item 按内容收缩，页面宽度随卡片数量变化。 */
+    width: 100%;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 2.5rem 1rem 4rem;
+    padding-block: 2.5rem 4rem;
+    padding-inline: var(--page-gutter);
   }
   .content-head {
     margin-bottom: 1.5rem;

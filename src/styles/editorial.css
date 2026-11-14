@@ -1,4 +1,10 @@
 :root {
+  /* 全站统一内容宽度与栏距：首页 / 归档 / 标签 / 文章详情 / 搜索 /
+     关于 / 404 / 页头 / 面包屑 / 分隔线 / 页脚 共用这两个尺寸令牌。
+     仅影响布局，不涉及任何配色。 */
+  --page-width: 62rem;
+  --page-gutter: 1rem;
+
   --ink: #17231c;
   --muted: #607067;
   --accent: #1f7550;
@@ -99,7 +105,7 @@ body {
 
 section,
 footer {
-  max-width: 62rem;
+  max-width: var(--page-width);
 }
 
 a {
@@ -120,7 +126,7 @@ header {
 header .nav-container,
 header + hr,
 header > hr {
-  max-width: 62rem;
+  max-width: var(--page-width);
 }
 
 header .logo {

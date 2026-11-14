@@ -67,9 +67,10 @@ const recentPosts = sortedPosts.slice(0, 8);
   }
 
   .home-single-col {
-    max-width: 62rem;
+    max-width: var(--page-width);
     margin-inline: auto;
-    padding: 2.5rem 1rem 0;
+    padding-block: 2.5rem 0;
+    padding-inline: var(--page-gutter);
   }
 
   .all-posts-btn-wrapper {
